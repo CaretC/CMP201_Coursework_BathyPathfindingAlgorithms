@@ -4,7 +4,7 @@
 	Author: Joseph Lee (1903399)
 	E-mail: 1903399@uad.ac.uk
 	Decription: The aim of this program is to find the shortest path between the
-				start point and the end point within a given set of bathemetry data.
+				start point and the end point within a given set of bathymetry data.
 				The route is selected with the aim of using this route for subsea
 				cable installation so the route is selected to be the smoothest route
 				avaliable to prevent the need for the cable to go over any ridges.
