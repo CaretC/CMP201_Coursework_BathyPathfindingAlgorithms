@@ -24,6 +24,7 @@
 #include"ConsoleGUI.h"
 #include"DataLoader.h"
 #include"CsvWriter.h"
+#include"AStar.h"
 // =============================================================================================
 
 // =============================================================================================
@@ -64,6 +65,11 @@ int main() {
 	CsvWriter csvW;
 	csvW.WriteToCsv(StartPointUTM, "StartPoint.csv", ui);
 	csvW.WriteToCsv(EndPointUTM, "EndPoint.csv", ui);
+
+	// Star Algorithm
+	AStar astar;
+	std::vector<UtmCoord> aStarPath = astar.AStarPath(gridData, StartPoint, EndPoint);
+	csvW.WriteToCsv(aStarPath, "AStarPath.csv", ui);
 
 	return 0;
 }

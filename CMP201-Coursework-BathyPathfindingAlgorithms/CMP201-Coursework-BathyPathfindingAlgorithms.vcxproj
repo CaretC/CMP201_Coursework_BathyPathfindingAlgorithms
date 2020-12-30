@@ -139,17 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AStar.cpp" />
+    <ClCompile Include="AStarNode.h" />
     <ClCompile Include="ConsoleGUI.cpp" />
     <ClCompile Include="CsvWriter.cpp" />
     <ClCompile Include="DataLoader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PriorityQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AStar.h" />
     <ClInclude Include="ConsoleGUI.h" />
     <ClInclude Include="Coord.h" />
     <ClInclude Include="CsvWriter.h" />
     <ClInclude Include="DataLoader.h" />
     <ClInclude Include="DataNode.h" />
+    <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="UtmCoord.h" />
   </ItemGroup>
   <ItemGroup>
