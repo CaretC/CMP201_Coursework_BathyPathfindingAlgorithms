@@ -16,6 +16,16 @@
 #include "ConsoleGUI.h"
 // =============================================================================================
 
+void ConsoleGUI::Initialize()
+{
+	// Set cursor vis
+	CONSOLE_CURSOR_INFO     cursorInfo;
+
+	GetConsoleCursorInfo(hConsole, &cursorInfo);
+	cursorInfo.bVisible = false; // set the cursor visibility
+	SetConsoleCursorInfo(hConsole, &cursorInfo);
+}
+
 // =============================================================================================
 // Public Functions
 // ================
@@ -56,6 +66,8 @@ void ConsoleGUI::StatusBar(std::string barName, int currentValue, int fullValue)
 
 	// Overwrite Line
 	std::cout << "\r\b";
+	//std::cout << "                                ";
+	//std::cout << "\r\b";
 
 
 	std::cout << " [";
@@ -82,7 +94,8 @@ void ConsoleGUI::StatusBar(std::string barName, int currentValue, int fullValue)
 
 	SetTextDefault();
 
-	std::cout << "] - " << std::setprecision(3) << percentage << "%";
+	//std::cout << "] - " << std::setprecision(3) << percentage << "%";
+	std::cout << "] - " << (int)percentage << "%";
 
 	// If Complete end line
 	if (percentage == 100)

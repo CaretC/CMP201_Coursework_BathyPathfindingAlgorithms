@@ -30,6 +30,9 @@ class ConsoleGUI
 	// Public
 	// ------
 	public:
+		// Initialize the console for gui
+		void Initialize();
+
 		// Displays the welcome screen to the console
 		void WelcomeScreen();
 		

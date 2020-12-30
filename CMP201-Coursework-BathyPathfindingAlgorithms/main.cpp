@@ -17,7 +17,10 @@
 // =============================================================================================
 // Includes
 // ========
+#include<vector>
+
 #include"ConsoleGUI.h"
+#include"DataLoader.h"
 // =============================================================================================
 
 // =============================================================================================
@@ -31,6 +34,7 @@
 int main() {
 	// Create UI Instance
 	ConsoleGUI ui;
+	ui.Initialize();
 
 	// Print Welcome Screen
 	ui.WelcomeScreen();
@@ -41,11 +45,9 @@ int main() {
 	ui.PrintWarning("Warning");
 	ui.PrintSuccess("Success");
 
-	for (int i = 0; i <= 100; i += 5) {		
-		ui.StatusBar("Test Bar", i, 100);
-		Sleep(250);
-	}
-
+	// Load Data
+	DataLoader loader;
+	std::vector<std::vector<DataNode>> gridData = loader.LoadDataFile("ConnelBathyDataSampleTinyTrimmed.csv", &ui);
 
 	return 0;
 }
