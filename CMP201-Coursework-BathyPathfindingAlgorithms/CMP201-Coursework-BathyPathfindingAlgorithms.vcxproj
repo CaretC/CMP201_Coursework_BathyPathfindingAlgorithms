@@ -140,13 +140,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleGUI.cpp" />
+    <ClCompile Include="CsvWriter.cpp" />
     <ClCompile Include="DataLoader.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleGUI.h" />
+    <ClInclude Include="Coord.h" />
+    <ClInclude Include="CsvWriter.h" />
     <ClInclude Include="DataLoader.h" />
     <ClInclude Include="DataNode.h" />
+    <ClInclude Include="UtmCoord.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\Data\ConnelBathyDataSampleTinyTrimmed.csv">

@@ -122,7 +122,7 @@ std::vector<std::vector<DataNode>> DataLoader::LoadDataFile(std::string filePath
 		col++;
 		lineNumber++;
 
-		gui->StatusBar("Grid Status", lineNumber, rawDataLen);
+		//gui->StatusBar("Grid Status", lineNumber, rawDataLen);
 	}
 
 	gui->PrintSuccess("Raw data conversion to grid completed!");

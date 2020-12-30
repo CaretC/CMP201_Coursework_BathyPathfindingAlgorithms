@@ -19,8 +19,11 @@
 // ========
 #include<vector>
 
+#include"Coord.h"
+#include"UtmCoord.h"
 #include"ConsoleGUI.h"
 #include"DataLoader.h"
+#include"CsvWriter.h"
 // =============================================================================================
 
 // =============================================================================================
@@ -41,13 +44,26 @@ int main() {
 
 	// Print message
 	ui.PrintBlankLine();
-	ui.PrintMessage("Test Message");
-	ui.PrintWarning("Warning");
-	ui.PrintSuccess("Success");
+	ui.PrintMessage("Loading Required Bathy Data ...");
+	ui.PrintBlankLine();
+
 
 	// Load Data
 	DataLoader loader;
 	std::vector<std::vector<DataNode>> gridData = loader.LoadDataFile("ConnelBathyDataSampleTinyTrimmed.csv", &ui);
+
+	// Specify Start Point
+	Coord StartPoint = { 0, 0 };
+	Coord EndPoint = { 62, 226 };
+
+	// Convert to UTM For test
+	UtmCoord StartPointUTM = { (double)gridData[StartPoint.X][StartPoint.Y].UTM_Easting, (double)gridData[StartPoint.X][StartPoint.Y].UTM_Nothing };
+	UtmCoord EndPointUTM = { (double)gridData[EndPoint.X][EndPoint.Y].UTM_Easting, (double)gridData[EndPoint.X][EndPoint.Y].UTM_Nothing };
+
+	// Write Start/ End to .csv
+	CsvWriter csvW;
+	csvW.WriteToCsv(StartPointUTM, "StartPoint.csv", ui);
+	csvW.WriteToCsv(EndPointUTM, "EndPoint.csv", ui);
 
 	return 0;
 }
