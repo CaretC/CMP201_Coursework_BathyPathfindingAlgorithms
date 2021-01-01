@@ -25,7 +25,7 @@ std::vector<UtmCoord> AStar::AStarPath(const std::vector<std::vector<DataNode>>&
 	std::vector<UtmCoord> path;
 
 	// Crate Grid To Pathfind On
-	std::vector<std::vector<AStarNode>> aStarGrid = CreateAStarGrid(grid);
+	std::vector<std::vector<AStarNode>> aStarGrid = createAStarGrid(grid);
 
 	// Path Found
 	bool pathFound = false;
@@ -43,7 +43,7 @@ std::vector<UtmCoord> AStar::AStarPath(const std::vector<std::vector<DataNode>>&
 	// Initialize StartNode Values
 	startNode->F_Cost = 0;
 	startNode->G_Cost = 0;
-	startNode->H_Cost = CalculateHCost(*startNode, *endNode);
+	startNode->H_Cost = calculateHCost(*startNode, *endNode);
 
 	// Add Start Node to the OPEN set
 	openSet.Push(startNode);
@@ -77,22 +77,22 @@ std::vector<UtmCoord> AStar::AStarPath(const std::vector<std::vector<DataNode>>&
 				{
 					// Up
 				case 0:
-					neighbourNode = CheckNeighbour(aStarGrid, up);
+					neighbourNode = checkNeighbour(aStarGrid, up);
 					break;
 
 					// Down
 				case 1:
-					neighbourNode = CheckNeighbour(aStarGrid, down);
+					neighbourNode = checkNeighbour(aStarGrid, down);
 					break;
 
 					// Left
 				case 2:
-					neighbourNode = CheckNeighbour(aStarGrid, left);
+					neighbourNode = checkNeighbour(aStarGrid, left);
 					break;
 
 					// Right
 				case 3:
-					neighbourNode = CheckNeighbour(aStarGrid, right);
+					neighbourNode = checkNeighbour(aStarGrid, right);
 					break;
 
 				}
@@ -108,8 +108,8 @@ std::vector<UtmCoord> AStar::AStarPath(const std::vector<std::vector<DataNode>>&
 					}
 
 					// Set nieghbour node f, g, h values
-					neighbourNode->G_Cost = currentNode->G_Cost + neighbourNode->Distance + CalaculateGradientCost(*currentNode, *neighbourNode);
-					neighbourNode->H_Cost = CalculateHCost(*currentNode, *endNode);
+					neighbourNode->G_Cost = currentNode->G_Cost + neighbourNode->Distance + calculateGradientCost(*currentNode, *neighbourNode);
+					neighbourNode->H_Cost = calculateHCost(*currentNode, *endNode);
 					neighbourNode->F_Cost = neighbourNode->G_Cost + neighbourNode->H_Cost;
 
 					// Set the current node as the parent node of neighbour node
@@ -123,7 +123,7 @@ std::vector<UtmCoord> AStar::AStarPath(const std::vector<std::vector<DataNode>>&
 		else
 		{
 			pathFound = true;			
-			BackTrack(aStarGrid, endNode, path);
+			backTrack(aStarGrid, endNode, path);
 			break;
 		}
 
@@ -137,7 +137,7 @@ std::vector<UtmCoord> AStar::AStarPath(const std::vector<std::vector<DataNode>>&
 // =============================================================================================
 // Private Functions
 // =================
-std::vector<std::vector<AStarNode>> AStar::CreateAStarGrid(const std::vector<std::vector<DataNode>> &grid)
+std::vector<std::vector<AStarNode>> AStar::createAStarGrid(const std::vector<std::vector<DataNode>> &grid)
 {
 	// Create Placeholder For A* Grid
 	std::vector<std::vector<AStarNode>> aStarGrid;
@@ -151,7 +151,7 @@ std::vector<std::vector<AStarNode>> AStar::CreateAStarGrid(const std::vector<std
 	for (int y = 0; y < yHeight; y++) {
 		for (int x = 0; x < xWidth; x++) {
 			aStarGrid[x][y].Position = { x, y };
-			aStarGrid[x][y].UtmPosition = { grid[x][y].UTM_Easting, grid[x][y].UTM_Nothing };
+			aStarGrid[x][y].UtmPosition = { grid[x][y].UTM_Easting, grid[x][y].UTM_Northing };
 			aStarGrid[x][y].Depth = grid[x][y].Depth;
 		}
 	}
@@ -159,14 +159,14 @@ std::vector<std::vector<AStarNode>> AStar::CreateAStarGrid(const std::vector<std
 	return aStarGrid;
 }
 
-double AStar::CalaculateGradientCost(const AStarNode& currentNode, const AStarNode& newNode)
+double AStar::calculateGradientCost(const AStarNode& currentNode, const AStarNode& newNode)
 {
 	return abs(currentNode.Depth - newNode.Depth);
 }
 
-AStarNode* AStar::CheckNeighbour(std::vector<std::vector<AStarNode>>& grid, Coord position)
+AStarNode* AStar::checkNeighbour(std::vector<std::vector<AStarNode>>& grid, Coord position)
 {
-	if (IsValidPos(position, grid.size(), grid[0].size()))
+	if (isValidPos(position, grid.size(), grid[0].size()))
 	{
 		if (grid[position.X][position.Y].Visited == false)
 		{
@@ -177,7 +177,7 @@ AStarNode* AStar::CheckNeighbour(std::vector<std::vector<AStarNode>>& grid, Coor
 	return nullptr;
 }
 
-int AStar::CalculateHCost(const AStarNode &node, const AStarNode &endNode)
+int AStar::calculateHCost(const AStarNode &node, const AStarNode &endNode)
 {
 	int dx = abs(node.Position.X - endNode.Position.X);
 	int dy = abs(node.Position.Y - endNode.Position.Y);
@@ -185,7 +185,7 @@ int AStar::CalculateHCost(const AStarNode &node, const AStarNode &endNode)
 	return 2 * (dx * dy);
 }
 
-void AStar::BackTrack(std::vector<std::vector<AStarNode>>& grid, AStarNode* node, std::vector<UtmCoord> &path)
+void AStar::backTrack(std::vector<std::vector<AStarNode>>& grid, AStarNode* node, std::vector<UtmCoord> &path)
 {
 	if (node == nullptr)
 	{
@@ -194,11 +194,11 @@ void AStar::BackTrack(std::vector<std::vector<AStarNode>>& grid, AStarNode* node
 	else
 	{
 		path.push_back(node->UtmPosition);
-		BackTrack(grid, node->ParentNode, path);
+		backTrack(grid, node->ParentNode, path);
 	}
 }
 
-bool AStar::IsValidPos(Coord position, int xMax, int yMax)
+bool AStar::isValidPos(Coord position, int xMax, int yMax)
 {
 	if (position.X >= 0 && position.Y >= 0 && position.X < xMax && position.Y < yMax)
 	{

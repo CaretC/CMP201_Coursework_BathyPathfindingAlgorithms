@@ -40,21 +40,17 @@ class AStar
 	// Private
 	// -------
 	private:
-		std::vector<std::vector<AStarNode>> CreateAStarGrid(const std::vector<std::vector<DataNode>> &grid);
+		std::vector<std::vector<AStarNode>> createAStarGrid(const std::vector<std::vector<DataNode>> &grid);
 
-		double CalaculateGradientCost(const AStarNode& currentNode, const AStarNode& newNode);
+		double calculateGradientCost(const AStarNode& currentNode, const AStarNode& newNode);
 
-		AStarNode* CheckNeighbour(std::vector<std::vector<AStarNode>> &grid, Coord position);
+		AStarNode* checkNeighbour(std::vector<std::vector<AStarNode>> &grid, Coord position);		
 
-		void CalculateGCost();
+		int calculateHCost(const AStarNode& node, const AStarNode& endNode);		
 
-		int CalculateHCost(const AStarNode& node, const AStarNode& endNode);
+		void backTrack(std::vector<std::vector<AStarNode>>& grid, AStarNode* node, std::vector<UtmCoord> &path);
 
-		void CalaculateFCost();
-
-		void BackTrack(std::vector<std::vector<AStarNode>>& grid, AStarNode* node, std::vector<UtmCoord> &path);
-
-		bool IsValidPos(Coord position, int xMax, int yMax);
+		bool isValidPos(Coord position, int xMax, int yMax);
 
 	// -----------------------------------------------------------------------------------------
 };

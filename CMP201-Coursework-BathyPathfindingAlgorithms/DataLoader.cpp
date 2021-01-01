@@ -32,7 +32,7 @@ std::vector<std::vector<DataNode>> DataLoader::LoadDataFile(std::string filePath
 	// If File is open
 	if (inFile.is_open())
 	{
-		gui->PrintSuccess("Data file " + filePath + " opened successfully!");
+		gui->PrintSuccess("Data file " + filePath + "  opened successfully!");
 		gui->PrintMessage("Loading raw data from " + filePath + " ...");
 
 		// Read Data Line-by-line
@@ -54,7 +54,7 @@ std::vector<std::vector<DataNode>> DataLoader::LoadDataFile(std::string filePath
 			// Create New Data Node
 			DataNode newNode;
 			newNode.UTM_Easting = lineItem[0];
-			newNode.UTM_Nothing = lineItem[1];
+			newNode.UTM_Northing = lineItem[1];
 			newNode.Depth = lineItem[2];
 
 			// Push Data Node to loadedData Vector
@@ -86,7 +86,7 @@ std::vector<std::vector<DataNode>> DataLoader::LoadDataFile(std::string filePath
 
 	for (auto& node : loadedData) {
 		xSet.insert(node.UTM_Easting);
-		ySet.insert(node.UTM_Nothing);
+		ySet.insert(node.UTM_Northing);
 	}
 
 	int xWidth = xSet.size();
@@ -116,7 +116,7 @@ std::vector<std::vector<DataNode>> DataLoader::LoadDataFile(std::string filePath
 		}
 
 		grid[row][col].UTM_Easting = dataNode.UTM_Easting;
-		grid[row][col].UTM_Nothing = dataNode.UTM_Nothing;
+		grid[row][col].UTM_Northing = dataNode.UTM_Northing;
 		grid[row][col].Depth = dataNode.Depth;
 
 		col++;

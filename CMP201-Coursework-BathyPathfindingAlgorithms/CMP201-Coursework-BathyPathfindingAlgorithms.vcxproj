@@ -144,6 +144,8 @@
     <ClCompile Include="ConsoleGUI.cpp" />
     <ClCompile Include="CsvWriter.cpp" />
     <ClCompile Include="DataLoader.cpp" />
+    <ClCompile Include="Lee.cpp" />
+    <ClCompile Include="LeeNode.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PriorityQueue.cpp" />
   </ItemGroup>
@@ -154,6 +156,7 @@
     <ClInclude Include="CsvWriter.h" />
     <ClInclude Include="DataLoader.h" />
     <ClInclude Include="DataNode.h" />
+    <ClInclude Include="Lee.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="UtmCoord.h" />
   </ItemGroup>

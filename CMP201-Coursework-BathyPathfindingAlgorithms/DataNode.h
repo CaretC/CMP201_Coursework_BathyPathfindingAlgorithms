@@ -14,6 +14,6 @@
 
 struct DataNode {
 	double UTM_Easting = -1;
-	double UTM_Nothing = -1;
+	double UTM_Northing = -1;
 	double Depth;
 };

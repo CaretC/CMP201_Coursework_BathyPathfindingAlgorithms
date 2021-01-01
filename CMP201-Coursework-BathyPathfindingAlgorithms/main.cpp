@@ -25,6 +25,7 @@
 #include"DataLoader.h"
 #include"CsvWriter.h"
 #include"AStar.h"
+#include"Lee.h"
 // =============================================================================================
 
 // =============================================================================================
@@ -58,13 +59,19 @@ int main() {
 	Coord EndPoint = { 62, 226 };
 
 	// Convert to UTM For test
-	UtmCoord StartPointUTM = { (double)gridData[StartPoint.X][StartPoint.Y].UTM_Easting, (double)gridData[StartPoint.X][StartPoint.Y].UTM_Nothing };
-	UtmCoord EndPointUTM = { (double)gridData[EndPoint.X][EndPoint.Y].UTM_Easting, (double)gridData[EndPoint.X][EndPoint.Y].UTM_Nothing };
+	UtmCoord StartPointUTM = { (double)gridData[StartPoint.X][StartPoint.Y].UTM_Easting, (double)gridData[StartPoint.X][StartPoint.Y].UTM_Northing };
+	UtmCoord EndPointUTM = { (double)gridData[EndPoint.X][EndPoint.Y].UTM_Easting, (double)gridData[EndPoint.X][EndPoint.Y].UTM_Northing };
 
 	// Write Start/ End to .csv
 	CsvWriter csvW;
 	csvW.WriteToCsv(StartPointUTM, "StartPoint.csv", ui);
 	csvW.WriteToCsv(EndPointUTM, "EndPoint.csv", ui);
+
+	// Lee Algorithm
+	Lee lee;
+	std::vector<UtmCoord> leePath = lee.LeePath(gridData, StartPoint, EndPoint);
+	csvW.WriteToCsv(leePath, "LeePath.csv", ui);
+	ui.PrintWarning("WARNING: You Still have not included weight into the Lee algorithm!");
 
 	// Star Algorithm
 	AStar astar;
