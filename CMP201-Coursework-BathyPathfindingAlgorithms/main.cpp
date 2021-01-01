@@ -37,7 +37,7 @@
 // =============================================================================================
 // Global Variables
 // ================
-const int NUMBER_OF_RUNS = 100;
+const int NUMBER_OF_RUNS = 1000;
 // =============================================================================================
 
 
@@ -76,6 +76,7 @@ int main() {
 	csvW.WriteToCsv(EndPointUTM, "EndPoint.csv", ui);
 
 	// Lee Algorithm
+	// -------------
 	PerformanceMonitor leePerformance;	
 	Lee lee;
 	std::vector<UtmCoord> leePath;
@@ -91,16 +92,13 @@ int main() {
 		ui.StatusBar("Lee Status", i+1, NUMBER_OF_RUNS);
 	}
 
-	// Test
-	std::vector<double> test = leePerformance.GetResutls();
-	leePerformance.Clear();
-
 	ui.PrintWarning("WARNING: You Still have not included weight into the Lee algorithm!");
-	csvW.WriteToCsv(leePath, "LeePath.csv", ui);
-	
+	csvW.WriteToCsv(leePath, "LeePath.csv", ui);	
+	csvW.WriteToCsv<double>(leePerformance.GetResutls(), "LeePerformance.csv", ui);
 
 
-	// Star Algorithm
+	// A* Algorithm
+	// ------------
 	PerformanceMonitor aStarPerformance;
 	AStar astar;
 	std::vector<UtmCoord> aStarPath;
@@ -116,7 +114,7 @@ int main() {
 	}
 
 	csvW.WriteToCsv(aStarPath, "AStarPath.csv", ui);
-	// TODO: Write Astar to .csv
+	csvW.WriteToCsv<double>(aStarPerformance.GetResutls(), "AStarPerformance.csv", ui);
 
 
 	return 0;

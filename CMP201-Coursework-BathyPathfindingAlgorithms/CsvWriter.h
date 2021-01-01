@@ -32,6 +32,7 @@ class CsvWriter
 		// Write vector of Coord data to a .csv file
 		void WriteToCsv(UtmCoord& coord, std::string outFilePath, ConsoleGUI& ui);
 		void WriteToCsv(std::vector<UtmCoord> &coordvector, std::string outFilePath, ConsoleGUI &ui);
+		template<typename T> void WriteToCsv(std::vector<T> data, std::string outFilePath, ConsoleGUI &ui);
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------
@@ -41,4 +42,41 @@ class CsvWriter
 	// -----------------------------------------------------------------------------------------
 
 };
+// =============================================================================================
+
+// =============================================================================================
+// Template Functions
+// ==================
+template<typename T>
+inline void CsvWriter::WriteToCsv(std::vector<T> data, std::string outFilePath, ConsoleGUI &ui)
+{
+	ui.PrintMessage("Writting to .csv file ...");
+
+	// Open Ouput File Stream
+	std::ofstream outFile;
+	outFile.open(outFilePath);
+
+	if (outFile.is_open())
+	{
+		ui.PrintSuccess("Output file " + outFilePath + "opened successfully!");
+		ui.PrintMessage("Writting file data ...");
+
+		// Write data to file
+		for (auto& dataItem : data) {
+			outFile << std::to_string(dataItem) << std::endl;
+		}
+
+		// Close File
+		ui.PrintSuccess("Data write complete!");
+		outFile.close();
+		ui.PrintSuccess(outFilePath + " .csv data write complete. " + outFilePath + " closed!");
+
+	}
+	else
+	{
+		ui.PrintWarning("Output file " + outFilePath + " failed to open, exiting application");
+		exit(1);
+	}
+}
+
 // =============================================================================================
