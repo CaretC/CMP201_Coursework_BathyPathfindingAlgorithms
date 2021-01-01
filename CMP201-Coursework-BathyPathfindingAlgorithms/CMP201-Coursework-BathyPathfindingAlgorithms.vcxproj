@@ -147,6 +147,7 @@
     <ClCompile Include="Lee.cpp" />
     <ClCompile Include="LeeNode.h" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PerformanceMonitor.cpp" />
     <ClCompile Include="PriorityQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +158,7 @@
     <ClInclude Include="DataLoader.h" />
     <ClInclude Include="DataNode.h" />
     <ClInclude Include="Lee.h" />
+    <ClInclude Include="PerformanceMonitor.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="UtmCoord.h" />
   </ItemGroup>

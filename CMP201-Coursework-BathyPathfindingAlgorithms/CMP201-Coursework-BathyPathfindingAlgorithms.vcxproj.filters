@@ -42,6 +42,9 @@
     <ClCompile Include="LeeNode.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="PerformanceMonitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleGUI.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Lee.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PerformanceMonitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

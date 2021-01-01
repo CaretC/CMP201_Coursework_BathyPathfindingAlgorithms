@@ -26,12 +26,20 @@
 #include"CsvWriter.h"
 #include"AStar.h"
 #include"Lee.h"
+#include"PerformanceMonitor.h"
 // =============================================================================================
 
 // =============================================================================================
 // Function Prototypes
 // ===================
 // =============================================================================================
+
+// =============================================================================================
+// Global Variables
+// ================
+const int NUMBER_OF_RUNS = 100;
+// =============================================================================================
+
 
 // =============================================================================================
 // Main
@@ -68,15 +76,43 @@ int main() {
 	csvW.WriteToCsv(EndPointUTM, "EndPoint.csv", ui);
 
 	// Lee Algorithm
+	PerformanceMonitor leePerformance;	
 	Lee lee;
-	std::vector<UtmCoord> leePath = lee.LeePath(gridData, StartPoint, EndPoint);
-	csvW.WriteToCsv(leePath, "LeePath.csv", ui);
+	std::vector<UtmCoord> leePath;
+
+	ui.StatusBar("Lee Status", 0, NUMBER_OF_RUNS);
+
+	for (int i = 0; i <= NUMBER_OF_RUNS; i++) {
+		leePerformance.Start();
+		leePath = lee.LeePath(gridData, StartPoint, EndPoint);
+		leePerformance.Stop();	
+		
+		leePerformance.Save();
+		ui.StatusBar("Lee Status", i, NUMBER_OF_RUNS);
+	}
+
 	ui.PrintWarning("WARNING: You Still have not included weight into the Lee algorithm!");
+	csvW.WriteToCsv(leePath, "LeePath.csv", ui);
+	// TODO: Write LeePerformance to .csv
+
 
 	// Star Algorithm
+	PerformanceMonitor aStarPerformance;
 	AStar astar;
-	std::vector<UtmCoord> aStarPath = astar.AStarPath(gridData, StartPoint, EndPoint);
+	std::vector<UtmCoord> aStarPath;
+
+	ui.StatusBar("A-Star Status", 0, NUMBER_OF_RUNS);
+
+	for (int i = 0; i <= NUMBER_OF_RUNS; i++) {
+		aStarPerformance.Start();
+		aStarPath = astar.AStarPath(gridData, StartPoint, EndPoint);
+		aStarPerformance.Stop();
+		aStarPerformance.Save();
+		ui.StatusBar("A-Star Status", i, NUMBER_OF_RUNS);
+	}
+
 	csvW.WriteToCsv(aStarPath, "AStarPath.csv", ui);
+	// TODO: Write Astar to .csv
 
 	return 0;
 }
