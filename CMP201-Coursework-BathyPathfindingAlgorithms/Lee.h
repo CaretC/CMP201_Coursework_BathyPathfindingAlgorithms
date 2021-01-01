@@ -48,7 +48,7 @@ class Lee
 		bool setNeighbours(std::vector<std::vector<LeeNode>>& leeGrid, const Coord& CurrentPosition, const Coord& endPoint);
 
 		// Sets the neighbour node distance, returns true if the node is the end node
-		bool setNodeDist(std::vector<std::vector<LeeNode>>& leeGrid, const Coord&, double dist, const Coord& endPos);
+		bool setNodeDist(std::vector<std::vector<LeeNode>>& leeGrid, const Coord& currentpositon, const Coord& previous, double dist, const Coord& endPos);
 
 		//  Returns true id Coord is a valid position
 		bool isValidPos(Coord position, int xMax, int yMax);
@@ -61,6 +61,9 @@ class Lee
 
 		// Returns the coord of the lowest distance node
 		Coord compareNodeDistance(const std::vector<std::vector<LeeNode>>& leeGrid, const Coord& currentNode, const Coord& copareNode);
+
+		// Returns the absolute difference in depth between the currentNode and the compareNode
+		double depthDifference(const std::vector<std::vector<LeeNode>>& leeGrid, const Coord& currentNode, const Coord& copareNode);
 
 	// -----------------------------------------------------------------------------------------
 };

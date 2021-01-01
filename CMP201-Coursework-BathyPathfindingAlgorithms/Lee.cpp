@@ -29,6 +29,7 @@ std::vector<UtmCoord> Lee::LeePath(const std::vector<std::vector<DataNode>> &gri
 
 	// Set StartNode Distance to 0
 	leeGrid[startPoint.X][startPoint.Y].Distance = 0;
+	leeGrid[startPoint.X][startPoint.Y].WeightedDistance = 0;
 
 	// Flood
 	flood(startPoint, endpoint, leeGrid);
@@ -84,7 +85,10 @@ void Lee::flood(const Coord &startPoint, const Coord &endpoint, std::vector<std:
 					// If end is found exit while loop
 					if (endFound)
 					{
-						leeGrid[endpoint.X][endpoint.Y].Distance = distFromStart + 1;
+						setNodeDist(leeGrid, endpoint, { (x - 1), y }, (double)distFromStart, endpoint);
+
+/*						leeGrid[endpoint.X][endpoint.Y].Distance = (double)distFromStart + 1;
+						leeGrid[endpoint.X][endpoint.Y].WeightedDistance = (double)distFromStart + depthDifference(leeGrid, { (x - 1), y }, endpoint)*/;
 						goto end;
 					}
 				}
@@ -109,22 +113,22 @@ bool Lee::setNeighbours(std::vector<std::vector<LeeNode>>& leeGrid, const Coord&
 		{
 			// Up
 		case 0:
-			endFound = setNodeDist(leeGrid, up, (leeGrid[currentPosition.X][currentPosition.Y].Distance + 1), endPoint);
+			endFound = setNodeDist(leeGrid, up, currentPosition, (leeGrid[currentPosition.X][currentPosition.Y].Distance + 1), endPoint);
 			break;
 
 			// Down
 		case 1:
-			endFound = setNodeDist(leeGrid, down, (leeGrid[currentPosition.X][currentPosition.Y].Distance + 1), endPoint);
+			endFound = setNodeDist(leeGrid, down, currentPosition, (leeGrid[currentPosition.X][currentPosition.Y].Distance + 1), endPoint);
 			break;
 
 			// Left
 		case 2:
-			endFound = setNodeDist(leeGrid, left, (leeGrid[currentPosition.X][currentPosition.Y].Distance + 1), endPoint);
+			endFound = setNodeDist(leeGrid, left, currentPosition, (leeGrid[currentPosition.X][currentPosition.Y].Distance + 1), endPoint);
 			break;
 
 			// Right
 		case 3:
-			endFound = setNodeDist(leeGrid, right, (leeGrid[currentPosition.X][currentPosition.Y].Distance + 1), endPoint);
+			endFound = setNodeDist(leeGrid, right, currentPosition, (leeGrid[currentPosition.X][currentPosition.Y].Distance + 1), endPoint);
 			break;
 
 		}
@@ -133,18 +137,21 @@ bool Lee::setNeighbours(std::vector<std::vector<LeeNode>>& leeGrid, const Coord&
 	return endFound;
 }
 
-bool Lee::setNodeDist(std::vector<std::vector<LeeNode>>& leeGrid, const Coord& position, double dist, const Coord& endPos)
+bool Lee::setNodeDist(std::vector<std::vector<LeeNode>>& leeGrid, const Coord& position, const Coord& previous, double dist, const Coord& endPos)
 {
 	if (isValidPos(position, leeGrid.size(), leeGrid[0].size()))
 	{
 		if (position.X == endPos.X && position.Y == endPos.Y)
 		{
+			leeGrid[endPos.X][endPos.Y].Distance = dist + 1;
+			leeGrid[endPos.X][endPos.Y].WeightedDistance = dist + depthDifference(leeGrid, previous, position);
 			return true;
 		}
 
 		if (leeGrid[position.X][position.Y].Distance == -1)
 		{
 			leeGrid[position.X][position.Y].Distance = dist;
+			leeGrid[position.X][position.Y].WeightedDistance = dist + depthDifference(leeGrid, previous, position);
 		}
 
 		return false;
@@ -217,7 +224,7 @@ Coord Lee::compareNodeDistance(const std::vector<std::vector<LeeNode>>& leeGrid,
 {
 	if (isValidPos(currentNode, leeGrid.size(), leeGrid[0].size()) && isValidPos(compareNode, leeGrid.size(), leeGrid[0].size()))
 	{
-		if ((leeGrid[currentNode.X][currentNode.Y].Distance > leeGrid[compareNode.X][compareNode.Y].Distance) && leeGrid[compareNode.X][compareNode.Y].Distance != -1)
+		if ((leeGrid[currentNode.X][currentNode.Y].WeightedDistance > leeGrid[compareNode.X][compareNode.Y].WeightedDistance) && leeGrid[compareNode.X][compareNode.Y].WeightedDistance != -1)
 		{
 			return compareNode;
 		}
@@ -225,6 +232,19 @@ Coord Lee::compareNodeDistance(const std::vector<std::vector<LeeNode>>& leeGrid,
 
 	return currentNode;
 }
+double Lee::depthDifference(const std::vector<std::vector<LeeNode>>& leeGrid, const Coord& currentNode, const Coord& compareNode)
+{
+	if (isValidPos(currentNode, leeGrid.size(), leeGrid[0].size()) && isValidPos(compareNode, leeGrid.size(), leeGrid[0].size()))
+	{
+		return abs(leeGrid[currentNode.X][currentNode.Y].Depth - leeGrid[compareNode.X][compareNode.Y].Depth);
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+
 // =============================================================================================
 
 
