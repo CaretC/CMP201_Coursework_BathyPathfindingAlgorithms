@@ -82,18 +82,22 @@ int main() {
 
 	ui.StatusBar("Lee Status", 0, NUMBER_OF_RUNS);
 
-	for (int i = 0; i <= NUMBER_OF_RUNS; i++) {
+	for (int i = 0; i < NUMBER_OF_RUNS; i++) {
 		leePerformance.Start();
 		leePath = lee.LeePath(gridData, StartPoint, EndPoint);
 		leePerformance.Stop();	
 		
 		leePerformance.Save();
-		ui.StatusBar("Lee Status", i, NUMBER_OF_RUNS);
+		ui.StatusBar("Lee Status", i+1, NUMBER_OF_RUNS);
 	}
+
+	// Test
+	std::vector<double> test = leePerformance.GetResutls();
+	leePerformance.Clear();
 
 	ui.PrintWarning("WARNING: You Still have not included weight into the Lee algorithm!");
 	csvW.WriteToCsv(leePath, "LeePath.csv", ui);
-	// TODO: Write LeePerformance to .csv
+	
 
 
 	// Star Algorithm
@@ -103,16 +107,17 @@ int main() {
 
 	ui.StatusBar("A-Star Status", 0, NUMBER_OF_RUNS);
 
-	for (int i = 0; i <= NUMBER_OF_RUNS; i++) {
+	for (int i = 0; i < NUMBER_OF_RUNS; i++) {
 		aStarPerformance.Start();
 		aStarPath = astar.AStarPath(gridData, StartPoint, EndPoint);
 		aStarPerformance.Stop();
 		aStarPerformance.Save();
-		ui.StatusBar("A-Star Status", i, NUMBER_OF_RUNS);
+		ui.StatusBar("A-Star Status", i+1, NUMBER_OF_RUNS);
 	}
 
 	csvW.WriteToCsv(aStarPath, "AStarPath.csv", ui);
 	// TODO: Write Astar to .csv
+
 
 	return 0;
 }

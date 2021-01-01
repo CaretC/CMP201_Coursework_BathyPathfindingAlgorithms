@@ -34,6 +34,12 @@ class PerformanceMonitor
 		// Saves Current performance clock time performance vector
 		void Save();
 
+		// Clears the performance vector of all results
+		void Clear();
+
+		// Returns all saved performance results form performace vector
+		std::vector<double> GetResutls();
+
 
 
 	// -----------------------------------------------------------------------------------------
@@ -55,7 +61,7 @@ class PerformanceMonitor
 		std::chrono::duration<double> duration;
 
 		// Vector of saved performance times
-		std::vector<double> performanceResutls;
+		std::vector<double> performanceResults;
 	// -----------------------------------------------------------------------------------------
 };
 // =============================================================================================

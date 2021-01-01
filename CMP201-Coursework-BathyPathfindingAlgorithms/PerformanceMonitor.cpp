@@ -32,8 +32,20 @@ void PerformanceMonitor::Stop()
 
 void PerformanceMonitor::Save()
 {
-	performanceResutls.push_back(duration.count());
+	performanceResults.push_back(duration.count());
 }
+
+void PerformanceMonitor::Clear()
+{
+	performanceResults.clear();
+}
+
+std::vector<double> PerformanceMonitor::GetResutls()
+{
+	return performanceResults;
+}
+
+
 // =============================================================================================
 
 // =============================================================================================
