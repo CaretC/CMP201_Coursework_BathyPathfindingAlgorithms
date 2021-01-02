@@ -19,7 +19,7 @@
 // =============================================================================================
 // Public Functions
 // ================
-std::vector<UtmCoord> Lee::LeePath(const std::vector<std::vector<DataNode>> &grid, const Coord &startPoint, const Coord &endpoint)
+std::vector<UtmCoord> Lee::LeePath(const std::vector<std::vector<DataNode>> &grid, const Coord &startPoint, const Coord &endpoint, bool saveVisited)
 {
 	// Create Lee Grid for use with algorithm
 	std::vector<std::vector<LeeNode>> leeGrid;
@@ -37,6 +37,23 @@ std::vector<UtmCoord> Lee::LeePath(const std::vector<std::vector<DataNode>> &gri
 	// BackTrack
 	std::vector<UtmCoord> path;
 	backTrack(leeGrid, endpoint, path);
+
+	if (saveVisited)
+	{
+		std::vector<UtmCoord> visited;
+
+		for (int y = 0; y < leeGrid[0].size(); y++) {
+			for (int x = 0; x < leeGrid.size(); x++) {
+				if (leeGrid[x][y].Distance != -1)
+				{
+					visited.push_back(leeGrid[x][y].UtmPosition);
+				}
+			}
+		}
+
+		CsvWriter cW;
+		cW.WriteToCsv(visited, "LeeVisited.csv");
+	}
 
 	return path;
 }

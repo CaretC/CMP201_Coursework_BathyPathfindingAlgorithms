@@ -38,6 +38,7 @@
 // Global Variables
 // ================
 const int NUMBER_OF_RUNS = 1000;
+const int SAVE_VISITED_NODES = false;
 // =============================================================================================
 
 
@@ -54,17 +55,20 @@ int main() {
 
 	// Print message
 	ui.PrintBlankLine();
+	ui.PrintSubTitle("Setup");
 	ui.PrintMessage("Loading Required Bathy Data ...");
-	ui.PrintBlankLine();
-
 
 	// Load Data
 	DataLoader loader;
 	std::vector<std::vector<DataNode>> gridData = loader.LoadDataFile("ConnelBathyDataSampleTinyTrimmed.csv", &ui);
 
 	// Specify Start Point
-	Coord StartPoint = { 0, 0 };
-	Coord EndPoint = { 62, 226 };
+	// Plot 1
+	//Coord StartPoint = {20, 226};
+	//Coord EndPoint = { 42, 0 };
+	// Plot 2
+	Coord StartPoint = { 20, 113 };
+	Coord EndPoint = { 42, 0 };
 
 	// Convert to UTM For test
 	UtmCoord StartPointUTM = { (double)gridData[StartPoint.X][StartPoint.Y].UTM_Easting, (double)gridData[StartPoint.X][StartPoint.Y].UTM_Northing };
@@ -74,6 +78,9 @@ int main() {
 	CsvWriter csvW;
 	csvW.WriteToCsv(StartPointUTM, "StartPoint.csv", ui);
 	csvW.WriteToCsv(EndPointUTM, "EndPoint.csv", ui);
+
+	// Wait
+	ui.WaitForKeyPress();
 
 	// Lee Algorithm
 	// -------------
@@ -86,17 +93,18 @@ int main() {
 
 	for (int i = 0; i < NUMBER_OF_RUNS; i++) {
 		leePerformance.Start();
-		leePath = lee.LeePath(gridData, StartPoint, EndPoint);
+		leePath = lee.LeePath(gridData, StartPoint, EndPoint, SAVE_VISITED_NODES);
 		leePerformance.Stop();	
 		
 		leePerformance.Save();
 		ui.StatusBar("Lee Status", i+1, NUMBER_OF_RUNS);
 	}
 
-	ui.PrintWarning("WARNING: You Still have not included weight into the Lee algorithm!");
 	csvW.WriteToCsv(leePath, "LeePath.csv", ui);	
 	csvW.WriteToCsv<double>(leePerformance.GetResutls(), "LeePerformance.csv", ui);
 
+	// Wait
+	ui.WaitForKeyPress();
 
 	// A* Algorithm
 	// ------------
@@ -109,7 +117,7 @@ int main() {
 
 	for (int i = 0; i < NUMBER_OF_RUNS; i++) {
 		aStarPerformance.Start();
-		aStarPath = astar.AStarPath(gridData, StartPoint, EndPoint);
+		aStarPath = astar.AStarPath(gridData, StartPoint, EndPoint, SAVE_VISITED_NODES);
 		aStarPerformance.Stop();
 		aStarPerformance.Save();
 		ui.StatusBar("A-Star Status", i+1, NUMBER_OF_RUNS);
@@ -118,6 +126,8 @@ int main() {
 	csvW.WriteToCsv(aStarPath, "AStarPath.csv", ui);
 	csvW.WriteToCsv<double>(aStarPerformance.GetResutls(), "AStarPerformance.csv", ui);
 
+	// Wait
+	ui.WaitForKeyPress();
 
 	return 0;
 }

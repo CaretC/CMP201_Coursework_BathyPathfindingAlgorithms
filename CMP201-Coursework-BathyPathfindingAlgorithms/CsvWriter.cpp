@@ -19,9 +19,33 @@
 
 
 
+
+
 // =============================================================================================
 // Public Functions
 // ================
+void CsvWriter::WriteToCsv(UtmCoord& coord, std::string outFilePath)
+{
+	// Open Ouput File Stream
+	std::ofstream outFile;
+	outFile.open(outFilePath);
+
+	if (outFile.is_open())
+	{
+		// Write data to file
+		outFile << std::to_string(coord.UTM_Eastings) << "," << std::to_string(coord.UTM_Northing) << std::endl;
+
+
+		// Close File
+		outFile.close();
+	}
+	else
+	{
+		exit(1);
+	}
+}
+
+
 void CsvWriter::WriteToCsv(UtmCoord& coord, std::string outFilePath, ConsoleGUI& ui)
 {
 	ui.PrintMessage("Writting to .csv file ...");
@@ -48,6 +72,28 @@ void CsvWriter::WriteToCsv(UtmCoord& coord, std::string outFilePath, ConsoleGUI&
 	else
 	{
 		ui.PrintWarning("Output file " + outFilePath + " failed to open, exiting application");
+		exit(1);
+	}
+}
+
+void CsvWriter::WriteToCsv(std::vector<UtmCoord>& coordvector, std::string outFilePath)
+{
+	// Open Ouput File Stream
+	std::ofstream outFile;
+	outFile.open(outFilePath);
+
+	if (outFile.is_open())
+	{
+		// Write data to file
+		for (auto& coord : coordvector) {
+			outFile << std::to_string(coord.UTM_Eastings) << "," << std::to_string(coord.UTM_Northing) << std::endl;
+		}
+
+		// Close File
+		outFile.close();
+	}
+	else
+	{
 		exit(1);
 	}
 }

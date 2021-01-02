@@ -20,6 +20,7 @@
 #include"LeeNode.h"
 #include"Coord.h"
 #include"UtmCoord.h"
+#include"CsvWriter.h"
 
 // =============================================================================================
 
@@ -31,7 +32,7 @@ class Lee
 	// ------
 	public:
 		// Finds the path between start pointand end point using the Lee pathfinding algorithm
-		std::vector<UtmCoord> LeePath(const std::vector<std::vector<DataNode>>& grid, const Coord& startPoint, const Coord& endpoint);
+		std::vector<UtmCoord> LeePath(const std::vector<std::vector<DataNode>>& grid, const Coord& startPoint, const Coord& endpoint, bool saveVisited);
 	// -----------------------------------------------------------------------------------------
 
 	// -----------------------------------------------------------------------------------------

@@ -19,7 +19,7 @@
 // =============================================================================================
 // Public Functions
 // ================
-std::vector<UtmCoord> AStar::AStarPath(const std::vector<std::vector<DataNode>>& grid, const Coord& startPoint, const Coord& endpoint)
+std::vector<UtmCoord> AStar::AStarPath(const std::vector<std::vector<DataNode>>& grid, const Coord& startPoint, const Coord& endpoint, bool saveVisited)
 {
 	// Placeholder for path
 	std::vector<UtmCoord> path;
@@ -130,6 +130,19 @@ std::vector<UtmCoord> AStar::AStarPath(const std::vector<std::vector<DataNode>>&
 		alreadyFound:;
 	}
 
+	if (saveVisited)
+	{
+		std::vector<UtmCoord> visitedNodes;
+
+		for (auto& node : closedSet)
+		{
+			visitedNodes.push_back(node->UtmPosition);
+		}
+
+		CsvWriter cW;
+		cW.WriteToCsv(visitedNodes, "AstarVisited.csv");
+	}
+
 	return path;
 }
 // =============================================================================================
@@ -148,8 +161,8 @@ std::vector<std::vector<AStarNode>> AStar::createAStarGrid(const std::vector<std
 	aStarGrid.resize(xWidth, std::vector<AStarNode>(yHeight));
 
 	// Populate A* Grid with the grid data
-	for (int y = 0; y < yHeight; y++) {
-		for (int x = 0; x < xWidth; x++) {
+	for (int x = 0; x < xWidth; x++) {
+		for (int y = 0; y < yHeight; y++) {
 			aStarGrid[x][y].Position = { x, y };
 			aStarGrid[x][y].UtmPosition = { grid[x][y].UTM_Easting, grid[x][y].UTM_Northing };
 			aStarGrid[x][y].Depth = grid[x][y].Depth;
@@ -182,7 +195,7 @@ int AStar::calculateHCost(const AStarNode &node, const AStarNode &endNode)
 	int dx = abs(node.Position.X - endNode.Position.X);
 	int dy = abs(node.Position.Y - endNode.Position.Y);
 
-	return 2 * (dx * dy);
+	return 2 * (dx + dy);
 }
 
 void AStar::backTrack(std::vector<std::vector<AStarNode>>& grid, AStarNode* node, std::vector<UtmCoord> &path)

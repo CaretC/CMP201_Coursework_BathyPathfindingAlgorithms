@@ -30,7 +30,9 @@ class CsvWriter
 	// ------
 	public:
 		// Write vector of Coord data to a .csv file
+		void WriteToCsv(UtmCoord& coord, std::string outFilePath);
 		void WriteToCsv(UtmCoord& coord, std::string outFilePath, ConsoleGUI& ui);
+		void WriteToCsv(std::vector<UtmCoord>& coordvector, std::string outFilePath);
 		void WriteToCsv(std::vector<UtmCoord> &coordvector, std::string outFilePath, ConsoleGUI &ui);
 		template<typename T> void WriteToCsv(std::vector<T> data, std::string outFilePath, ConsoleGUI &ui);
 	// -----------------------------------------------------------------------------------------

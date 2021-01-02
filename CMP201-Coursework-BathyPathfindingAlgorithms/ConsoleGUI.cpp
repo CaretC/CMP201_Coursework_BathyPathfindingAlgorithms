@@ -74,6 +74,12 @@ void ConsoleGUI::PrintSubTitle(std::string subTitle)
 	std::cout << std::endl;
 }
 
+void ConsoleGUI::WaitForKeyPress()
+{
+	PrintMessage("Press any [ENTER] to continue ...");
+	std::cin.get();
+}
+
 void ConsoleGUI::StatusBar(std::string barName, int currentValue, int fullValue)
 {
 	double percentage = (double)currentValue / (double)fullValue * 100;
@@ -82,8 +88,6 @@ void ConsoleGUI::StatusBar(std::string barName, int currentValue, int fullValue)
 
 	// Overwrite Line
 	std::cout << "\r\b";
-	//std::cout << "                                ";
-	//std::cout << "\r\b";
 
 
 	std::cout << " [";

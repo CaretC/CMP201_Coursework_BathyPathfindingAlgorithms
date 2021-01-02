@@ -22,6 +22,7 @@
 #include"Coord.h"
 #include"AStarNode.h"
 #include"PriorityQueue.h"
+#include"CsvWriter.h"
 // =============================================================================================
 
 // =============================================================================================
@@ -32,7 +33,7 @@ class AStar
 	// ------
 	public:
 		// Finds the path between start pointand end point using the A* pathfinding algorithm
-		std::vector<UtmCoord> AStarPath(const std::vector<std::vector<DataNode>> &grid, const Coord &startPoint, const Coord &endpoint);
+		std::vector<UtmCoord> AStarPath(const std::vector<std::vector<DataNode>> &grid, const Coord &startPoint, const Coord &endpoint, bool saveVisited);
 
 	// -----------------------------------------------------------------------------------------
 

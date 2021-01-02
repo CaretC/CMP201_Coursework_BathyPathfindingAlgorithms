@@ -51,6 +51,9 @@ class ConsoleGUI
 		// Prints a sub title to the console at the current cursor position as line
 		void PrintSubTitle(std::string subTitle);
 
+		// Prints Press any key to continue message and wait for keep press
+		void WaitForKeyPress();
+
 		/* Prints status bar to console based on the current value and displays as a percentage of
 		the full value*/
 		void StatusBar(std::string barName, int currentValue, int fullValue);
