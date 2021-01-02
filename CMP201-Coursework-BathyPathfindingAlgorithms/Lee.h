@@ -57,10 +57,10 @@ class Lee
 		void backTrack(std::vector<std::vector<LeeNode>>& leeGrid, const Coord& pos, std::vector<UtmCoord>& path);
 
 		// Return the neighbour node with the lowest distance value.
-		Coord lowestNeighbour(const std::vector<std::vector<LeeNode>>& leeGrid, const Coord& pos);
+		Coord lowestNeighbour(const std::vector<std::vector<LeeNode>>& leeGrid, const Coord& position);
 
 		// Returns the coord of the lowest distance node
-		Coord compareNodeDistance(const std::vector<std::vector<LeeNode>>& leeGrid, const Coord& currentNode, const Coord& copareNode);
+		Coord compareNodeDistance(const std::vector<std::vector<LeeNode>>& leeGrid, const Coord& currentNode, const Coord& compareNode);
 
 		// Returns the absolute difference in depth between the currentNode and the compareNode
 		double depthDifference(const std::vector<std::vector<LeeNode>>& leeGrid, const Coord& currentNode, const Coord& copareNode);

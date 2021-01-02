@@ -48,6 +48,9 @@ class ConsoleGUI
 		// Prints success message to the console at the current cursor position as line
 		void PrintSuccess(std::string successMessage);
 
+		// Prints a sub title to the console at the current cursor position as line
+		void PrintSubTitle(std::string subTitle);
+
 		/* Prints status bar to console based on the current value and displays as a percentage of
 		the full value*/
 		void StatusBar(std::string barName, int currentValue, int fullValue);

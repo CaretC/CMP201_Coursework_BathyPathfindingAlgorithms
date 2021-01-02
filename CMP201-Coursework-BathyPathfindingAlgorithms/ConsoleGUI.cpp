@@ -58,6 +58,22 @@ void ConsoleGUI::PrintSuccess(std::string successMessage)
 	SetTextDefault();
 }
 
+void ConsoleGUI::PrintSubTitle(std::string subTitle)
+{
+	SetTextColour(EMPHASIS_COLOR);
+	std::cout << " " << subTitle << std::endl;
+	SetTextDefault();
+
+	std::cout << " ";
+
+	for (int i = 0; i < subTitle.size(); i++)
+	{
+		std::cout << "-";
+	}
+
+	std::cout << std::endl;
+}
+
 void ConsoleGUI::StatusBar(std::string barName, int currentValue, int fullValue)
 {
 	double percentage = (double)currentValue / (double)fullValue * 100;

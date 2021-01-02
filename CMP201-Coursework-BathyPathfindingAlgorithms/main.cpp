@@ -81,6 +81,7 @@ int main() {
 	Lee lee;
 	std::vector<UtmCoord> leePath;
 
+	ui.PrintSubTitle("Lee Algorithm");
 	ui.StatusBar("Lee Status", 0, NUMBER_OF_RUNS);
 
 	for (int i = 0; i < NUMBER_OF_RUNS; i++) {
@@ -103,6 +104,7 @@ int main() {
 	AStar astar;
 	std::vector<UtmCoord> aStarPath;
 
+	ui.PrintSubTitle("A* Algorithm");
 	ui.StatusBar("A-Star Status", 0, NUMBER_OF_RUNS);
 
 	for (int i = 0; i < NUMBER_OF_RUNS; i++) {

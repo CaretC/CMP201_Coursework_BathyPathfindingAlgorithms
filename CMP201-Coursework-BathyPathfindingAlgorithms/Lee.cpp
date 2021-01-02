@@ -86,9 +86,6 @@ void Lee::flood(const Coord &startPoint, const Coord &endpoint, std::vector<std:
 					if (endFound)
 					{
 						setNodeDist(leeGrid, endpoint, { (x - 1), y }, (double)distFromStart, endpoint);
-
-/*						leeGrid[endpoint.X][endpoint.Y].Distance = (double)distFromStart + 1;
-						leeGrid[endpoint.X][endpoint.Y].WeightedDistance = (double)distFromStart + depthDifference(leeGrid, { (x - 1), y }, endpoint)*/;
 						goto end;
 					}
 				}
@@ -156,6 +153,8 @@ bool Lee::setNodeDist(std::vector<std::vector<LeeNode>>& leeGrid, const Coord& p
 
 		return false;
 	}
+
+	return false;
 }
 
 bool Lee::isValidPos(Coord position, int xMax, int yMax)
@@ -191,8 +190,8 @@ Coord Lee::lowestNeighbour(const std::vector<std::vector<LeeNode>>& leeGrid, con
 	Coord left = { position.X - 1, position.Y };
 	Coord right = { position.X + 1, position.Y };
 
-	for (int pos = 0; pos < 4; pos++) {
-		switch (pos)
+	for (int dir = 0; dir < 4; dir++) {
+		switch (dir)
 		{
 			// Up
 			case 0:
