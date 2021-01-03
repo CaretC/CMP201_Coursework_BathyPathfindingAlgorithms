@@ -36,14 +36,14 @@ std::vector<UtmCoord> Lee::LeePath(const std::vector<std::vector<DataNode>> &gri
 
 	// BackTrack
 	std::vector<UtmCoord> path;
-	backTrack(leeGrid, endpoint, path);
+	backTrack(leeGrid, endpoint, { -1, -1 }, path);
 
 	if (saveVisited)
 	{
 		std::vector<UtmCoord> visited;
 
-		for (int y = 0; y < leeGrid[0].size(); y++) {
-			for (int x = 0; x < leeGrid.size(); x++) {
+		for (size_t y = 0; y < leeGrid[0].size(); y++) {
+			for (size_t x = 0; x < leeGrid.size(); x++) {
 				if (leeGrid[x][y].Distance != -1)
 				{
 					visited.push_back(leeGrid[x][y].UtmPosition);
@@ -90,19 +90,19 @@ void Lee::flood(const Coord &startPoint, const Coord &endpoint, std::vector<std:
 	// While the endNode has not been found
 	while (!endFound) {
 		// Seach Grid for next value
-		for (int y = 0; y < leeGrid[0].size(); y++) {
-			for (int x = 0; x < leeGrid.size(); x++) {
+		for (size_t y = 0; y < leeGrid[0].size(); y++) {
+			for (size_t x = 0; x < leeGrid.size(); x++) {
 				if (leeGrid[x][y].Distance == (double)distFromStart)
 				{
 					// Set Neighbour Nodes
-					endFound = setNeighbours(leeGrid, Coord{ x, y }, endpoint);
+					endFound = setNeighbours(leeGrid, Coord{ (int)x, (int)y }, endpoint);
 
 					distFromStart++;
 
 					// If end is found exit while loop
 					if (endFound)
 					{
-						setNodeDist(leeGrid, endpoint, { (x - 1), y }, (double)distFromStart, endpoint);
+						setNodeDist(leeGrid, endpoint, { ((int)x - 1), (int)y }, (double)distFromStart, endpoint);
 						goto end;
 					}
 				}
@@ -184,17 +184,17 @@ bool Lee::isValidPos(Coord position, int xMax, int yMax)
 	return false;
 }
 
-void Lee::backTrack(std::vector<std::vector<LeeNode>>& leeGrid, const Coord& pos, std::vector<UtmCoord>& path)
+void Lee::backTrack(std::vector<std::vector<LeeNode>>& leeGrid, const Coord& currentPos, const Coord& lastPos, std::vector<UtmCoord>& path)
 {
-	if (leeGrid[pos.X][pos.Y].Distance == 0)
+	if (leeGrid[currentPos.X][currentPos.Y].Distance == 0 || currentPos.X == lastPos.X && currentPos.Y == lastPos.Y)
 	{
-		int test = 0;
+		
 	}
 	else
 	{
-		path.push_back(leeGrid[pos.X][pos.Y].UtmPosition);
-		Coord nextPos = lowestNeighbour(leeGrid, pos);
-		backTrack(leeGrid, nextPos, path);
+		path.push_back(leeGrid[currentPos.X][currentPos.Y].UtmPosition);
+		Coord nextPos = lowestNeighbour(leeGrid, currentPos);
+		backTrack(leeGrid, nextPos, currentPos,path);
 	}
 }
 

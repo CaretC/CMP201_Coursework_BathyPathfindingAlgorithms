@@ -37,7 +37,7 @@
 // =============================================================================================
 // Global Variables
 // ================
-const int NUMBER_OF_RUNS = 1000;
+const int NUMBER_OF_RUNS = 100;
 const int SAVE_VISITED_NODES = false;
 // =============================================================================================
 
@@ -61,14 +61,20 @@ int main() {
 	// Load Data
 	DataLoader loader;
 	std::vector<std::vector<DataNode>> gridData = loader.LoadDataFile("ConnelBathyDataSampleTinyTrimmed.csv", &ui);
+	//std::vector<std::vector<DataNode>> gridData = loader.LoadDataFile("ConnelBathyDataSampleTinyTrimmedHalf.csv", &ui);
+	//std::vector<std::vector<DataNode>> gridData = loader.LoadDataFile("ConnelBathyDataSampleTinyTrimmedQuarter.csv", &ui);
 
 	// Specify Start Point
 	// Plot 1
 	//Coord StartPoint = {20, 226};
 	//Coord EndPoint = { 42, 0 };
 	// Plot 2
-	Coord StartPoint = { 20, 113 };
-	Coord EndPoint = { 42, 0 };
+	Coord EndPoint = { 10, 90 };
+	Coord StartPoint = { 40, 0 };
+	// Half
+	//Coord EndPoint = { 10, 113 };
+	//Coord StartPoint = { 12, 0 };
+
 
 	// Convert to UTM For test
 	UtmCoord StartPointUTM = { (double)gridData[StartPoint.X][StartPoint.Y].UTM_Easting, (double)gridData[StartPoint.X][StartPoint.Y].UTM_Northing };
@@ -78,6 +84,11 @@ int main() {
 	CsvWriter csvW;
 	csvW.WriteToCsv(StartPointUTM, "StartPoint.csv", ui);
 	csvW.WriteToCsv(EndPointUTM, "EndPoint.csv", ui);
+
+	// Plot points message
+	ui.PrintMessage("Start Point: {" + std::to_string(StartPoint.X) + "," + std::to_string(StartPoint.Y) + "}");
+	ui.PrintMessage("End Point: {" + std::to_string(EndPoint.X) + "," + std::to_string(EndPoint.Y) + "}");
+	ui.PrintMessage(std::to_string(NUMBER_OF_RUNS) + " itterations of each algorithm will be conducted");
 
 	// Wait
 	ui.WaitForKeyPress();

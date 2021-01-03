@@ -55,7 +55,7 @@ class Lee
 		bool isValidPos(Coord position, int xMax, int yMax);
 
 		// Return shortest path fron the endnode to the start node after the flood phase
-		void backTrack(std::vector<std::vector<LeeNode>>& leeGrid, const Coord& pos, std::vector<UtmCoord>& path);
+		void backTrack(std::vector<std::vector<LeeNode>>& leeGrid, const Coord& currentPos, const Coord& lastPos, std::vector<UtmCoord>& path);
 
 		// Return the neighbour node with the lowest distance value.
 		Coord lowestNeighbour(const std::vector<std::vector<LeeNode>>& leeGrid, const Coord& position);

@@ -81,8 +81,8 @@ std::vector<std::vector<DataNode>> DataLoader::LoadDataFile(std::string filePath
 	gui->PrintMessage(std::to_string(rawDataLen) + " raw data lines loaded");
 
 	// Confirm x & y dimensions
-	std::unordered_set<int> xSet;
-	std::unordered_set<int> ySet;
+	std::unordered_set<double> xSet;
+	std::unordered_set<double> ySet;
 
 	for (auto& node : loadedData) {
 		xSet.insert(node.UTM_Easting);

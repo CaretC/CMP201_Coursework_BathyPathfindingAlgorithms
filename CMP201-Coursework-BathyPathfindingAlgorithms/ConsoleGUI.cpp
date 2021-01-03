@@ -76,7 +76,7 @@ void ConsoleGUI::PrintSubTitle(std::string subTitle)
 
 void ConsoleGUI::WaitForKeyPress()
 {
-	PrintMessage("Press any [ENTER] to continue ...");
+	PrintMessage("Press [ENTER] to continue ...");
 	std::cin.get();
 }
 

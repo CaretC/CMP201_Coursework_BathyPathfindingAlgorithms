@@ -2,19 +2,20 @@
 # =======
 import numpy as np
 import matplotlib.pyplot as plt
+import statistics
 import csv
 
 # Script Setup
 # ============
 # Plot Name
-plotName = "A* Algorithm Box Plot - Grid Generation By Col Then Row"
+plotName = "Lee Performace Quarter Data"
 
 # Plot Data
 plotData = []
-plotDataFilePath = "AStarPerformance.csv"
+plotDataFilePath = "LeePerformance.csv"
 
 # Output Plot File Name
-PlotFileName = "output/AStarBoxPlot-GridColRow.png"
+PlotFileName = "output/LeePerformaceQuarterData.png"
 
 # Welcome Message
 # ===============
@@ -35,12 +36,15 @@ print("Converting data array to numpy array ...")
 plotData = np.array(plotData).astype(np.float)
 print("Conversion Complete")
 
+medianValue = statistics.median(plotData)
+
 # Plotting
 # ========
 print("Plotting Boxplot ...")
 fig, ax = plt.subplots()
 ax.set_title(plotName)
 ax.boxplot(plotData)
+ax.text(1 + 0.1, medianValue, "Median = " + str(medianValue) + " sec")
 print("Boxplot Plotting Complete")
 
 # Show Plot
