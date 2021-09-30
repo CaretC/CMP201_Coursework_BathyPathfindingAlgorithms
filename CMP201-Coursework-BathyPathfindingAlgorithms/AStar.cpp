@@ -109,7 +109,7 @@ std::vector<UtmCoord> AStar::AStarPath(const std::vector<std::vector<DataNode>>&
 
 					// Set nieghbour node f, g, h values
 					neighbourNode->G_Cost = currentNode->G_Cost + neighbourNode->Distance + calculateGradientCost(*currentNode, *neighbourNode);
-					neighbourNode->H_Cost = calculateHCost(*currentNode, *endNode);
+					//neighbourNode->H_Cost = calculateHCost(*currentNode, *endNode);
 					neighbourNode->F_Cost = neighbourNode->G_Cost + neighbourNode->H_Cost;
 
 					// Set the current node as the parent node of neighbour node

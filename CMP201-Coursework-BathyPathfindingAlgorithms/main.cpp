@@ -37,7 +37,7 @@
 // =============================================================================================
 // Global Variables
 // ================
-const int NUMBER_OF_RUNS = 100;
+const int NUMBER_OF_RUNS = 1000;
 const int SAVE_VISITED_NODES = false;
 // =============================================================================================
 
@@ -69,9 +69,12 @@ int main() {
 	//Coord StartPoint = {20, 226};
 	//Coord EndPoint = { 42, 0 };
 	// Plot 2
-	Coord EndPoint = { 10, 90 };
-	Coord StartPoint = { 40, 0 };
-	// Half
+	Coord StartPoint = { 20, 113 };
+	Coord EndPoint = { 42, 0 };
+	// Plot 3
+	//Coord EndPoint = { 10, 90 };
+	//Coord StartPoint = { 40, 0 };
+	// Half / Quarter
 	//Coord EndPoint = { 10, 113 };
 	//Coord StartPoint = { 12, 0 };
 
